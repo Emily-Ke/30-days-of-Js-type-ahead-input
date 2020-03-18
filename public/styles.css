@@ -1,0 +1,55 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 5rem 1rem 1rem;
+  background: #ffc600;
+  min-height: 100vh;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+.dropdown-container {
+  width: 80%;
+  max-width: 20rem;
+  margin: auto;
+}
+
+#state-name {
+  width: 100%;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 1rem;
+  border: 10px solid rgb(244, 252, 250);
+}
+
+#dropdown {
+  width: 85%;
+  margin: auto;
+}
+
+#dropdown > div {
+  line-height: 2;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px solid rgb(185, 187, 186);
+  background: white;
+  cursor: pointer;
+}
+
+#dropdown > div:nth-child(odd) {
+  background: linear-gradient(white, #eee);
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+}
+
+#dropdown > div:nth-child(even) {
+  background: linear-gradient(#eee, white);
+  clip-path: polygon(5% 0, 95% 0, 100% 100%, 0 100%);
+}
+
+#dropdown > div:hover {
+  background: #fbfbfb;
+}
