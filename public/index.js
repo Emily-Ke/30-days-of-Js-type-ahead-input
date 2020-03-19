@@ -1,58 +1,23 @@
-const states = [
-  'Alabama',
-  'Alaska',
-  'Arizona',
-  'Arkansas',
-  'California',
-  'Colorado',
-  'Connecticut',
-  'Delaware',
-  'Florida',
-  'Georgia',
-  'Hawaii',
-  'Idaho',
-  'Illinois',
-  'Indiana',
-  'Iowa',
-  'Kansas',
-  'Kentucky',
-  'Louisiana',
-  'Maine',
-  'Maryland',
-  'Massachusetts',
-  'Michigan',
-  'Minnesota',
-  'Mississippi',
-  'Missouri',
-  'Montana',
-  'Nebraska',
-  'Nevada',
-  'New Hampshire',
-  'New Jersey',
-  'New Mexico',
-  'New York',
-  'North Carolina',
-  'North Dakota',
-  'Ohio',
-  'Oklahoma',
-  'Oregon',
-  'Pennsylvania',
-  'Rhode Island',
-  'South Carolina',
-  'South Dakota',
-  'Tennessee',
-  'Texas',
-  'Utah',
-  'Vermont',
-  'Virginia',
-  'Washington',
-  'West Virginia',
-  'Wisconsin',
-  'Wyoming'
-];
-
 const getStateInputElement = () => document.getElementById('state-name');
 const getDropdownElement = () => document.getElementById('dropdown');
+
+const fetchStates = () => {
+  let fetched = false;
+  let states = [];
+  return async () => {
+    if (!fetched) {
+      try {
+        const response = await fetch('states');
+        states = await response.json();
+        fetched = true;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    return states;
+  };
+};
+const getStates = fetchStates();
 
 const selectState = e => {
   if (!e.keyCode || e.keyCode === 13) {
@@ -64,8 +29,9 @@ const selectState = e => {
   }
 };
 
-const buildStateElements = (str = '') =>
-  states
+const buildStateElements = async (str = '') => {
+  const states = await getStates();
+  return states
     .filter(state => state.toLowerCase().includes(str) && state !== str)
     .map(state => {
       const stateElement = document.createElement('div');
@@ -75,6 +41,7 @@ const buildStateElements = (str = '') =>
       stateElement.addEventListener('keyup', selectState);
       return stateElement;
     });
+};
 
 const removeDropdown = () => {
   const dropdownElement = getDropdownElement();
@@ -83,14 +50,14 @@ const removeDropdown = () => {
   }
 };
 
-const renderDropdown = e => {
+const renderDropdown = async e => {
   const lowerCaseValue = e.target.value.toLowerCase();
 
   removeDropdown();
 
   if (!lowerCaseValue) return;
 
-  const stateNodes = buildStateElements(lowerCaseValue);
+  const stateNodes = await buildStateElements(lowerCaseValue);
   if (stateNodes.length > 0) {
     const dropdownElement = document.createElement('div');
     dropdownElement.id = 'dropdown';
