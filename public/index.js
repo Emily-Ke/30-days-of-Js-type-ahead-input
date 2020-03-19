@@ -39,10 +39,10 @@ const buildStateElements = async str => {
   return states
     .filter(state => searchPattern.test(state))
     .map(state => {
-      const stateElement = document.createElement('div');
+      const stateElement = document.createElement('li');
       stateElement.innerHTML = state.replace(
         searchPattern,
-        '<span class="matched-string">$&</span>'
+        '<span class="highlight">$&</span>'
       );
       stateElement.tabIndex = 0;
       stateElement.addEventListener('click', selectState);
@@ -68,7 +68,7 @@ const renderDropdown = async e => {
 
   const stateNodes = await buildStateElements(lowerCaseValue);
   if (stateNodes.length > 0) {
-    const dropdownElement = document.createElement('div');
+    const dropdownElement = document.createElement('ul');
     dropdownElement.id = 'dropdown';
     dropdownElement.append(...stateNodes);
 
