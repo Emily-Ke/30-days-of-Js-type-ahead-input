@@ -29,16 +29,25 @@ const selectState = e => {
   }
 };
 
-const buildStateElements = async (str = '') => {
+const buildStateElements = async str => {
+  if (!str) {
+    return [];
+  }
   const states = await getStates();
+  const searchPattern = new RegExp(str, 'i');
+
   return states
-    .filter(state => state.toLowerCase().includes(str) && state !== str)
+    .filter(state => searchPattern.test(state))
     .map(state => {
       const stateElement = document.createElement('div');
-      stateElement.textContent = state;
+      stateElement.innerHTML = state.replace(
+        searchPattern,
+        '<span class="matched-string">$&</span>'
+      );
       stateElement.tabIndex = 0;
       stateElement.addEventListener('click', selectState);
       stateElement.addEventListener('keyup', selectState);
+
       return stateElement;
     });
 };

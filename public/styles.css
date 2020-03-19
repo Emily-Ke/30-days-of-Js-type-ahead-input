@@ -14,6 +14,7 @@ body {
 }
 
 .dropdown-container {
+  min-width: 12rem;
   width: 80%;
   max-width: 20rem;
   margin: auto;
@@ -50,6 +51,11 @@ body {
   clip-path: polygon(5% 0, 95% 0, 100% 100%, 0 100%);
 }
 
-#dropdown > div:hover {
+#dropdown > div:hover,
+#dropdown > div:focus {
   background: #fbfbfb;
+}
+
+.matched-string {
+  background: #ffc600;
 }
